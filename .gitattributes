@@ -1,0 +1,49 @@
+virat_eda.ipynb filter=lfs diff=lfs merge=lfs -text
+*.ipynb filter=lfs diff=lfs merge=lfs -text
+**/*.ipynb filter=lfs diff=lfs merge=lfs -text
+**/*.txt filter=lfs diff=lfs merge=lfs -text
+*.txt filter=lfs diff=lfs merge=lfs -text
+**/*.pdf filter=lfs diff=lfs merge=lfs -text
+**/*.csv filter=lfs diff=lfs merge=lfs -text
+val_utils/minimum_requirements.txt filter=lfs diff=lfs merge=lfs -text
+val_utils/requirements.txt filter=lfs diff=lfs merge=lfs -text
+yolov8/requirements.txt filter=lfs diff=lfs merge=lfs -text
+novel_reid/model_architecture.txt filter=lfs diff=lfs merge=lfs -text
+novel_reid/model_def_seq.txt filter=lfs diff=lfs merge=lfs -text
+**/*.pth filter=lfs diff=lfs merge=lfs -text
+figures/eda_annotation_sizes.png filter=lfs diff=lfs merge=lfs -text
+figures/eda_class_distribution.png filter=lfs diff=lfs merge=lfs -text
+**/*.gif filter=lfs diff=lfs merge=lfs -text
+# .gitattributes
+
+# Treat as text files (normalize line endings)
+*.txt text
+*.md text
+*.css text
+*.csv text
+*.yml text
+*.yaml text
+*.sh text
+*.py text
+*.html text
+*.js text
+
+# Treat as binary files (do not normalize line endings)
+*.jpg binary
+*.png binary
+*.ico binary
+*.pdf binary
+*.gif binary
+*.avi binary
+*.mp4 binary
+*.cfg binary
+*.ini binary
+
+# LFS (Large File Storage) for large files
+*.avi filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.pt filter=lfs diff=lfs merge=lfs -text
+*.pth filter=lfs diff=lfs merge=lfs -text
+
+# Custom attributes
+*.ipynb diff=ipynb

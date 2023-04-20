@@ -1,0 +1,72 @@
+.vscode/
+
+# interpreter bytecode
+__pycache__/
+
+# experiment results
+runs/
+videos/
+weights
+
+# evaluation tools folder
+val_utils/
+
+# zip files
+*.zip
+
+# exports
+*_openvino_model
+*.torchscript
+*.pt
+*.onnx
+*.engine
+
+# interactive plots
+*.html
+
+assets/customdata/virat/
+
+*.txt
+*.mp4
+*.avi
+assets/
+experiment/
+yolov8
+
+
+# .gitignore
+
+# Ignore system and temporary files
+*~
+*.swp
+*.tmp
+*.bak
+*.log
+
+# Ignore Python files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore Jupyter Notebook files
+.ipynb_checkpoints/
+
+# Ignore large media files
+*.avi
+*.mp4
+*.gif
+
+# Ignore cache and configuration files
+*.cfg
+*.ini
+*.json
+
+# Ignore machine learning model files
+*.pt
+*.pth
+
+# Ignore other files
+*.DS_Store
+*.idx
+*.pack
+.gitkeep
