@@ -1,11 +1,11 @@
 import cv2
 from os.path import join
 
-def visualize(video_file,gt_tracks_path,pred_tracks_path,out_fn = None):
+def visualize(video_file,gt_tracks_path,pred_tracks_path,tracker,out_fn = None):
     # Read the ground truth object tracks from the file
     gt_tracks = {}
-    obj_type_itos = {1:'person',2:'car',3:'vehicles',4:'object',5:'bicycles'}
-    obj_type_itos_pred = {0:'person',2:'car'}
+    obj_type_itos = {1:'person',2:'vehicle',3:'vehicles',4:'object',5:'cyclist'}
+    obj_type_itos_pred = {0:'person',2:'vehicle'}
     with open(gt_tracks_path, 'r') as f:
         for line in f:
             fields = line.strip().split()
@@ -65,9 +65,9 @@ def visualize(video_file,gt_tracks_path,pred_tracks_path,out_fn = None):
     frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     top_center = (int(frame_width/2), 30)
-    top_center2 = (int(frame_width/2), 60)
-    top_center3 = (int(frame_width/2), 90)
-
+    top_center2 = (int(frame_width/2), 80)
+    top_center3 = (int(frame_width/2), 120)
+    thickness = 4
     # Loop through the frames of the video
     while True:
         ret, frame = cap.read()
@@ -78,19 +78,22 @@ def visualize(video_file,gt_tracks_path,pred_tracks_path,out_fn = None):
         frame_id = int(cap.get(cv2.CAP_PROP_POS_FRAMES))
         gt_tracks_for_frame = gt_tracks.get(frame_id, {})
         pred_tracks_for_frame = pred_tracks.get(frame_id, {})
-        cv2.putText(frame, 'frame:'+str(frame_id), top_center, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,0, 0), 2)
+        
+        cv2.putText(frame, 'frame:'+str(frame_id), top_center, cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0, 0), thickness)
 
         # Draw the ground truth tracks on the frame
         for obj_id, info in gt_tracks_for_frame.items():
             bbox = info['bbox']
             obj_type = info['obj_type']
             color = (0, 255, 0) # green for ground truth tracks
-            thickness = 2
+           
             x, y, w, h = bbox
             cv2.rectangle(frame, (x, y), (x + w, y + h), color, thickness)
             cv2.putText(frame, f'{obj_type}:{obj_id}', (x, y - 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, thickness)
-            cv2.putText(frame, 'GT', top_center2, cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, thickness)
-            cv2.putText(frame, 'Tracker', top_center3, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), thickness)
+            cv2.putText(frame, 'GT', top_center2, cv2.FONT_HERSHEY_SIMPLEX, 1, color, thickness)
+            #cv2.putText(frame, f'Tracker: {tracker}', top_center3, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), thickness)
+            cv2.putText(frame, f'Tracker: {tracker}', top_center3, cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255), thickness)
+
             
 
         # Draw the predicted tracks on the frame
