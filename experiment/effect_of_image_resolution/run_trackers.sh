@@ -1,7 +1,7 @@
 #!/bin/bash
 CONF_THRESH=0.1
-IMGSZS="480 720 1000 1280"
-TRACKERS="ocsort"
+IMGSZS="720"
+TRACKERS="deepocsort"
 
 for IMGSZ in $IMGSZS
 do

@@ -297,15 +297,12 @@ def main(opt):
     print('Loading',opt.tracking_method)
     import os, shutil
     
-    if os.path.exists(opt.exp_dir):
-        shutil.rmtree(opt.exp_dir)
-    os.makedirs(opt.exp_dir)
+    if not os.path.exists(opt.exp_dir):
+        os.makedirs(opt.exp_dir)
 
 
     for source in tqdm(glob('assets/customdata/virat/videos/*.mp4')):
-        if  'VIRAT_S_010001_03_000537_000563' not in source:
-            continue
-            
+        
         opt.source = source
         exp_vid_dir = join(opt.exp_dir, ntpath.basename(source))
         if os.path.exists(exp_vid_dir):

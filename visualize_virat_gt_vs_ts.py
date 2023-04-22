@@ -64,10 +64,14 @@ def visualize(video_file,gt_tracks_path,pred_tracks_path,tracker,out_fn = None):
     # Get the height and width of the frames in the video
     frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    top_center = (int(frame_width/2), 30)
-    top_center2 = (int(frame_width/2), 80)
-    top_center3 = (int(frame_width/2), 120)
-    thickness = 4
+    top_center = (int(frame_width/4), 100)
+    top_center3 = (int(frame_width/4), 200)
+    thickness_large = 7
+    thickness = 2
+    color_green = (0, 255, 0) # green for ground truth tracks
+    color = (0, 0, 255) # red for predicted tracks
+
+
     # Loop through the frames of the video
     while True:
         ret, frame = cap.read()
@@ -79,20 +83,22 @@ def visualize(video_file,gt_tracks_path,pred_tracks_path,tracker,out_fn = None):
         gt_tracks_for_frame = gt_tracks.get(frame_id, {})
         pred_tracks_for_frame = pred_tracks.get(frame_id, {})
         
-        cv2.putText(frame, 'frame:'+str(frame_id), top_center, cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0, 0), thickness)
+        cv2.putText(
+            frame, 'GT:frame:'+str(frame_id)
+            , top_center, cv2.FONT_HERSHEY_SIMPLEX, 3.0
+            , color_green, thickness_large
+        )
 
         # Draw the ground truth tracks on the frame
         for obj_id, info in gt_tracks_for_frame.items():
             bbox = info['bbox']
             obj_type = info['obj_type']
-            color = (0, 255, 0) # green for ground truth tracks
            
             x, y, w, h = bbox
-            cv2.rectangle(frame, (x, y), (x + w, y + h), color, thickness)
-            cv2.putText(frame, f'{obj_type}:{obj_id}', (x, y - 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, thickness)
-            cv2.putText(frame, 'GT', top_center2, cv2.FONT_HERSHEY_SIMPLEX, 1, color, thickness)
+            cv2.rectangle(frame, (x, y), (x + w, y + h), color_green, thickness)
+            cv2.putText(frame, f'{obj_type}:{obj_id}', (x, y - 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color_green, thickness)
             #cv2.putText(frame, f'Tracker: {tracker}', top_center3, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), thickness)
-            cv2.putText(frame, f'Tracker: {tracker}', top_center3, cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255), thickness)
+            cv2.putText(frame, f'Tracker: {tracker}', top_center3, cv2.FONT_HERSHEY_SIMPLEX, 3.0, (0, 0, 255), thickness_large)
 
             
 
@@ -100,8 +106,7 @@ def visualize(video_file,gt_tracks_path,pred_tracks_path,tracker,out_fn = None):
         for obj_id, info in pred_tracks_for_frame.items():
             bbox = info['bbox']
             obj_type = info['obj_type']
-            color = (0, 0, 255) # red for predicted tracks
-            thickness = 2
+            
             x, y, w, h = bbox
             cv2.rectangle(frame, (x, y), (x + w, y + h), color, thickness)
             cv2.putText(frame, f'{obj_type}:{obj_id}', (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, thickness)

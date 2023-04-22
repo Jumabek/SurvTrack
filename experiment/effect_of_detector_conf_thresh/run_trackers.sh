@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CONF_THRESH_LIST="0.2"
-TRACKERS="deepocsort strongsort botsort"
+TRACKERS="bytetrack"
 
 for CONF_THRESH in $CONF_THRESH_LIST
 do
