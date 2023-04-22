@@ -26,7 +26,6 @@ val_utils/
 
 assets/customdata/virat/
 
-*.txt
 *.mp4
 *.avi
 assets/

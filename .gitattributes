@@ -15,7 +15,6 @@ figures/eda_annotation_sizes.png filter=lfs diff=lfs merge=lfs -text
 figures/eda_class_distribution.png filter=lfs diff=lfs merge=lfs -text
 **/*.gif filter=lfs diff=lfs merge=lfs -text
 # .gitattributes
-
 # Treat as text files (normalize line endings)
 *.txt text
 *.md text
@@ -27,7 +26,6 @@ figures/eda_class_distribution.png filter=lfs diff=lfs merge=lfs -text
 *.py text
 *.html text
 *.js text
-
 # Treat as binary files (do not normalize line endings)
 *.jpg binary
 *.png binary
@@ -38,12 +36,10 @@ figures/eda_class_distribution.png filter=lfs diff=lfs merge=lfs -text
 *.mp4 binary
 *.cfg binary
 *.ini binary
-
 # LFS (Large File Storage) for large files
 *.avi filter=lfs diff=lfs merge=lfs -text
 *.mp4 filter=lfs diff=lfs merge=lfs -text
 *.pt filter=lfs diff=lfs merge=lfs -text
 *.pth filter=lfs diff=lfs merge=lfs -text
-
 # Custom attributes
 *.ipynb diff=ipynb
