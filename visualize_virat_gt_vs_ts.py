@@ -52,6 +52,14 @@ def visualize(video_file,gt_tracks_path,pred_tracks_path,tracker,out_fn = None):
     
     if out_fn is None:
         out_fn = pred_tracks_path.replace('.txt','.avi')#'output.avi'
+    
+    import os, ntpath
+    output_dir = ntpath.dirname(out_fn)
+    # raise error if output_dir does not exists
+    if not os.path.exists(output_dir):
+        raise ValueError("Output directory does not exists: ", output_dir)
+    
+
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
     fps = int(cap.get(cv2.CAP_PROP_FPS))
     frame_size = (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))

@@ -268,7 +268,7 @@ def parse_opt():
     opt = parser.parse_args()
     opt.imgsz *= 2 if len(opt.imgsz) == 1 else 1  # expand
     opt.tracking_config = ROOT / 'trackers' / opt.tracking_method / 'configs' / (opt.tracking_method + '.yaml')
-    print_args(vars(opt))
+    #print_args(vars(opt))
     return opt
 
 
@@ -287,28 +287,38 @@ def main(opt):
     tick = time.time()
     model = AutoBackend(yolo_weights, device=device, dnn=dnn, fp16=half)
     tock = time.time()
-    print('Loaded YOLO model in %.3f seconds' % (tock - tick))
 
     opt.model = model
     opt.device = device
     opt.is_seg = is_seg
 
     
-    print('Loading',opt.tracking_method)
     import os, shutil
     
     if not os.path.exists(opt.exp_dir):
         os.makedirs(opt.exp_dir)
 
+    TIMING_FPS = True
+    if TIMING_FPS:
+        source = 'assets/customdata/virat/videos/VIRAT_S_010113_02_000434_000479.mp4'
 
-    for source in tqdm(glob('assets/customdata/virat/videos/*.mp4')):
-        
         opt.source = source
         exp_vid_dir = join(opt.exp_dir, ntpath.basename(source))
         if os.path.exists(exp_vid_dir):
             shutil.rmtree(exp_vid_dir)
         os.makedirs(exp_vid_dir)
         run(**vars(opt))
+    print()
+
+    # for source in tqdm(glob('assets/customdata/virat/videos/*.mp4')):
+    #     if 'VIRAT_S_010113_02_000434_000479'  not in source:
+    #         continue
+    #     opt.source = source
+    #     exp_vid_dir = join(opt.exp_dir, ntpath.basename(source))
+    #     if os.path.exists(exp_vid_dir):
+    #         shutil.rmtree(exp_vid_dir)
+    #     os.makedirs(exp_vid_dir)
+    #     run(**vars(opt))
 
     # Print results
     #t = tuple(x.t / seen * 1E3 for x in dt)  # speeds per image

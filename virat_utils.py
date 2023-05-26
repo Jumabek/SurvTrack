@@ -84,3 +84,20 @@ def compute_metrics_for_video(gt_data, pred_data):
     return {'motp': motp, 'mota': mota, 'idf1': idf1}
 
 
+import matplotlib.pyplot as plt
+def matplotlib_setup(fontsize=35):
+    font = {'size'   : fontsize}
+    plt.rc('font', **font)
+    plt.rcParams["axes.linewidth"]  = 2.5
+    plt.grid(linewidth=3,axis='y', color='grey')
+
+    CB91_Blue = '#2CBDFE'
+    CB91_Green = '#47DBCD'
+    CB91_Pink = '#F3A0F2'
+    CB91_Purple = '#9D2EC5'
+    CB91_Violet = '#661D98'
+    CB91_Amber = '#F5B14C'
+    color_list = [CB91_Blue, CB91_Pink, CB91_Green, CB91_Amber,
+              CB91_Purple, CB91_Violet]
+    
+    plt.rcParams['axes.prop_cycle'] = plt.cycler(color=color_list)    
