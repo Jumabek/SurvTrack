@@ -56,7 +56,7 @@ def get_txt_path(source,exp_dir):
         pass
     return fn
 
-
+seen, windows, dt = 0, [], (Profile(), Profile(), Profile(), Profile())
 @torch.no_grad()
 def run(
         source='0',
@@ -97,7 +97,7 @@ def run(
         exp_dir = None
 ):
 
-    seen, windows, dt = 0, [], (Profile(), Profile(), Profile(), Profile())
+    global seen, windows, dt
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
     is_file = Path(source).suffix[1:] in (VID_FORMATS)
@@ -223,8 +223,8 @@ def run(
             
         # Print total time (preprocessing + inference + NMS + tracking)
         #LOGGER.info(f"{s}{'' if len(det) else '(no detections), '}{sum([dt.dt for dt in dt if hasattr(dt, 'dt')]) * 1E3:.1f}ms")
-    t = tuple(x.t / seen * 1E3 for x in dt) 
-    LOGGER.info(f'Speed: %.1fms pre-process, %.1fms inference, %.1fms NMS, %.1fms {tracking_method} update per image at shape {(1, 3, *imgsz)}' % t)
+    # t = tuple(x.t / seen * 1E3 for x in dt) 
+    # LOGGER.info(f'Speed: %.1fms pre-process, %.1fms inference, %.1fms NMS, %.1fms {tracking_method} update per image at shape {(1, 3, *imgsz)}' % t)
 
     
 
@@ -275,18 +275,17 @@ def parse_opt():
 def main(opt):
     from glob import glob
     import time
+    global seen, windows, dt
+
     check_requirements(requirements=ROOT / 'requirements.txt', exclude=('tensorboard', 'thop'))
 
     # Directories
     reid_weights=WEIGHTS / 'osnet_x0_25_msmt17.pt'
     yolo_weights, half, dnn = WEIGHTS /'yolov8m.pt', False, False
     # Load model
-    device = ''
-    device = select_device(device)
+    device = select_device('')
     is_seg = '-seg' in str(yolo_weights)
-    tick = time.time()
     model = AutoBackend(yolo_weights, device=device, dnn=dnn, fp16=half)
-    tock = time.time()
 
     opt.model = model
     opt.device = device
@@ -298,32 +297,37 @@ def main(opt):
     if not os.path.exists(opt.exp_dir):
         os.makedirs(opt.exp_dir)
 
-    TIMING_FPS = True
-    if TIMING_FPS:
-        source = 'assets/customdata/virat/videos/VIRAT_S_010113_02_000434_000479.mp4'
-
-        opt.source = source
-        exp_vid_dir = join(opt.exp_dir, ntpath.basename(source))
-        if os.path.exists(exp_vid_dir):
-            shutil.rmtree(exp_vid_dir)
-        os.makedirs(exp_vid_dir)
-        run(**vars(opt))
-    print()
-
-    # for source in tqdm(glob('assets/customdata/virat/videos/*.mp4')):
-    #     if 'VIRAT_S_010113_02_000434_000479'  not in source:
-    #         continue
-    #     opt.source = source
-    #     exp_vid_dir = join(opt.exp_dir, ntpath.basename(source))
-    #     if os.path.exists(exp_vid_dir):
-    #         shutil.rmtree(exp_vid_dir)
-    #     os.makedirs(exp_vid_dir)
-    #     run(**vars(opt))
-
-    # Print results
-    #t = tuple(x.t / seen * 1E3 for x in dt)  # speeds per image
-    #LOGGER.info(f'Speed: %.1fms pre-process, %.1fms inference, %.1fms NMS, %.1fms {opt.tracking_method} update per image at shape {(1, 3, *opt.imgsz)}' % t)
+    TIMING_FPS = False
+    seen, windows, dt = 0, [], (Profile(), Profile(), Profile(), Profile())
     
+    if TIMING_FPS:
+        for source in tqdm(glob('assets/customdata/virat/videos/*.mp4')[:5]):
+            opt.source = source
+            exp_vid_dir = join(opt.exp_dir, ntpath.basename(source))
+            if os.path.exists(exp_vid_dir):
+                shutil.rmtree(exp_vid_dir)
+            os.makedirs(exp_vid_dir)
+            run(**vars(opt))
+
+        # Print results
+        t = tuple(x.t / seen * 1E3 for x in dt)  # speeds per image
+        LOGGER.info(f'Speed: %.1fms pre-process, %.1fms inference, %.1fms NMS, %.1fms {opt.tracking_method} update per image at shape {(1, 3, *opt.imgsz)}' % t)
+
+    else:
+
+        for source in tqdm(glob('assets/customdata/virat/videos/*.mp4')):
+            opt.source = source
+            exp_vid_dir = join(opt.exp_dir, ntpath.basename(source))
+            if os.path.exists(exp_vid_dir):
+                shutil.rmtree(exp_vid_dir)
+            os.makedirs(exp_vid_dir)
+            run(**vars(opt))
+
+        # Print results
+        t = tuple(x.t / seen * 1E3 for x in dt)  # speeds per image
+        LOGGER.info(f'Speed: %.1fms pre-process, %.1fms inference, %.1fms NMS, %.1fms {opt.tracking_method} update per image at shape {(1, 3, *opt.imgsz)}' % t)
+
+        
 if __name__ == "__main__":
     opt = parse_opt()
     main(opt)
