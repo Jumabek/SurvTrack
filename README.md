@@ -1,7 +1,22 @@
-This repo is forked from https://github.com/mikel-brostrom/yolov8_tracking On March 11, 2023
+# Online Action Detection in Surveillance Scenarios: A Comprehensive Review and Comparative Study of State-of-the-Art Multi-Object Tracking Methods
 
-it contains Tracking experiment for CCTV surveilliance scenarios. 
+Repo is forked from https://github.com/mikel-brostrom/yolov8_tracking On March 11, 2023
 
+it contains comprehensive evaluation of SOTA trackers for Online Action Detection Task. 
+
+# Cite our work
+
+```
+@ARTICLE{10173520,
+  author={Alikhanov, Jumabek and Kim, Hakil},
+  journal={IEEE Access}, 
+  title={Online Action Detection in Surveillance Scenarios: A Comprehensive Review and Comparative Study of State-of-the-Art Multi-Object Tracking Methods}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={1-1},
+  doi={10.1109/ACCESS.2023.3292539}}
+```
 
 # Real-time multi-object tracking and segmentation using Yolov8 with DeepOCSORT and OSNet
 
