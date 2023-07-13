@@ -2,7 +2,12 @@
 
 Repo is forked from https://github.com/mikel-brostrom/yolov8_tracking On March 11, 2023
 
-it contains comprehensive evaluation of SOTA trackers for Online Action Detection Task. 
+it contains
+ - SurvTrack - a code/steps to obtain a subset of virat dataset that is used in the SurvTrack paper
+ - comprehensive evaluation of SOTA trackers for Online Action Detection Task.
+    - evals consists of
+      - detector confidence threshold
+      - detector input size
 
 # Cite our work
 
