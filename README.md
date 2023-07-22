@@ -13,7 +13,9 @@ it contains
       - detector confidence threshold
       - detector input size
 
-# Cite our work
+# Read the paper here ([URL_to_the_PDF](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10173520)
+
+# Consider citing
 
 ```
 @ARTICLE{10173520,
