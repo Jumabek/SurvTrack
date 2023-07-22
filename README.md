@@ -1,6 +1,6 @@
 # Online Action Detection in Surveillance Scenarios: A Comprehensive Review and Comparative Study of State-of-the-Art Multi-Object Tracking Methods
 
-![PDF Figure](https://github.com/Jumabek/SurvTrack/blob/main/experiment/effect_of_image_resolution/figures/comparison_conf_0.1_imgsz_720.pdf?raw=true)
+![alt text](https://github.com/Jumabek/SurvTrack/blob/main/experiment/effect_of_image_resolution/figures/comparison_conf_0.1_imgsz_720-1.png)
 
 
 Repo is forked from https://github.com/mikel-brostrom/yolov8_tracking On March 11, 2023
