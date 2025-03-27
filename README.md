@@ -1,7 +1,7 @@
 # Archived Repository
 
 🚨 This repository has been **archived** and is now read-only. 🚨  
-🔗 **New Repository:** [Click here](https://github.com/Jumabek/LITE)
+🔗 **Please visit our new repository here:** [LITE](https://github.com/Jumabek/LITE)
 
 
 
